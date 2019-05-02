@@ -1,0 +1,86 @@
+//
+//  main.cpp
+//  bj1275
+//
+//  Created by myounghak lee on 02/05/2019.
+//  Copyright © 2019 myounghak lee. All rights reserved.
+//
+
+#include <iostream>
+#include <cstdio>
+#include <math.h>
+#include <vector>
+
+#define swap(a,b) {int t = a; a = b; b = t;}
+
+using namespace std;
+
+typedef long long ll;
+
+void update(vector<ll> &tree, int node, int start, int end, int index, ll diff)
+{
+    if (!(start <= index && index <= end))
+        return;
+    
+    tree[node] += diff;
+    
+    if (start != end)
+    {
+        ll mid = (start + end) / 2;
+        
+        update(tree, node * 2, start, mid, index, diff);
+        update(tree, node * 2 + 1, mid + 1, end, index, diff);
+    }
+}
+
+ll query(vector<ll> &tree, int node, int start, int end, int left, int right)
+{
+    if (left > end || right < start)
+        return 0;
+    
+    if (left <= start && end <= right)
+        return tree[node];
+    
+    ll mid = (start + end) / 2;
+    
+    return query(tree, node * 2, start, mid, left, right) + query(tree, node * 2 + 1, mid + 1, end, left, right);
+}
+
+int main()
+{
+    int n, q;
+    
+    scanf("%d %d", &n, &q);
+    
+    int h = (int)ceil(log2(n));
+    int tree_size = (1 << (1 + h));
+    
+    vector<ll> arr(n);
+    vector<ll> tree(tree_size);
+    
+    for (int pos = 1; pos <= n; pos++)
+    {
+        scanf("%lld", &arr[pos - 1]);
+        update(tree, 1, 0, n - 1, pos - 1, arr[pos - 1]);
+    }
+    
+    while (q--)
+    {
+        int left, right;
+        int pos, val;
+        
+        scanf("%d %d", &left, &right);
+        
+        if (left > right)
+            swap(left,right);
+        
+        printf("%lld\n", query(tree, 1, 0, n - 1, left - 1, right - 1));
+        
+        scanf("%d %d", &pos, &val);
+        ll diff = val - arr[pos - 1];
+        arr[pos - 1] = val;
+        update(tree, 1, 0, n - 1, pos - 1, diff);
+    }
+    
+    return 0;
+}
