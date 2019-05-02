@@ -1,3 +1,20 @@
+//
+//  main.cpp
+//  bj2042
+//
+//  Created by myounghak lee on 02/05/2019.
+//  Copyright © 2019 myounghak lee. All rights reserved.
+//
+/*
+ 세그먼트 트리 사용
+ 세그먼트 트리란 : a배열의 부분합을 구할떄 aㅏ배열이 계속해서 바뀔수 있다고 할때, 부분 합을 트리구조에 저장함으로써 O(logN)의 속도로 aㅁ배열의 부분 하블
+ 빠르게 구할 수 있다.
+ 
+ 부모노드의 값은 자식 노드 값들의 합이고 리프노드는 a배열의 각 요스들입니다.
+ a의 크기가 n이면 트리의 높이 h는 logN이다.
+ 루트노드의 인덱스는0이다.
+ */
+
 #include <iostream>
 #include <math.h>
 
