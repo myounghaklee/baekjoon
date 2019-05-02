@@ -1,0 +1,36 @@
+//
+//  main.cpp
+//  bj1357
+//
+//  Created by myounghak lee on 02/05/2019.
+//  Copyright © 2019 myounghak lee. All rights reserved.
+//
+
+#include <iostream>
+#include <stdio.h>
+
+
+int Rev(int x){
+    int res = 0;
+    while(x){
+        res *= 10;
+        res += x%10;
+        x /= 10;
+    }
+    return res;
+    }
+        
+
+int main(int argc, const char * argv[]) {
+    int x,y;
+    int result;
+    scanf("%d %d", &x,&y);
+    
+    Rev(x);
+    Rev(y);
+    result = Rev(x)+Rev(y);
+    
+    printf("%d", Rev(result));
+
+    return 0;
+}
